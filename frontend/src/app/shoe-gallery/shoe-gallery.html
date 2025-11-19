@@ -1,0 +1,84 @@
+<p>shoe-gallery works!</p>
+<h1>Products</h1>
+
+<div class="mb-4">
+  <input type="text" placeholder="Name" [(ngModel)]="newProduct.name" />
+  <input type="number" placeholder="Price" [(ngModel)]="newProduct.price" />
+  <input type="text" placeholder="Description" [(ngModel)]="newProduct.description" />
+  <input type="text" placeholder="Image URL" [(ngModel)]="newProduct.image_url" />
+  <button (click)="addProduct()">Add Product</button>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px">
+  <div *ngFor="let p of products" style="border: 1px solid #ccc; padding: 10px; border-radius: 8px">
+    <!-- Edit mode -->
+    <ng-container *ngIf="editingProduct?.id === p.id; else viewMode">
+      <input [(ngModel)]="editingProduct!.name" placeholder="Name" />
+      <input type="number" [(ngModel)]="editingProduct!.price" placeholder="Price" />
+      <input [(ngModel)]="editingProduct!.description" placeholder="Description" />
+      <input [(ngModel)]="editingProduct!.image_url" placeholder="Image URL" />
+      <button (click)="saveEdit()">💾 Save</button>
+      <button (click)="editingProduct = null">✖ Cancel</button>
+    </ng-container>
+
+    <ng-template #viewMode>
+      <h3>{{ p.name }}</h3>
+      <p>${{ p.price }}</p>
+      <p>{{ p.description }}</p>
+      <img
+        *ngIf="p.image_url"
+        [src]="p.image_url"
+        alt="{{ p.name }}"
+        style="width: 100%; max-height: 150px; object-fit: cover; border-radius: 6px"
+      />
+      <!-- <button (click)="editingProduct = { ...p }">✏ Edit</button> -->
+      <button (click)="startEdit(p)">✏ Edit</button>
+      <button (click)="deleteProduct(p.id!)">🗑 Delete</button>
+    </ng-template>
+  </div>
+</div>
+
+<!-- <div class="mt-2">
+  <button (click)="updateProduct(p)">Save Changes</button>
+  <button (click)="deleteProduct(p.id!)">Delete</button>
+</div> -->
+<!-- </div> -->
+<!-- </div>
+  </div>
+</div> -->
+
+<ng-template #loadingTpl>
+  <p>Loading products...</p>
+</ng-template>
+
+<!--Original products -->
+<!-- <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px">
+  <div *ngFor="let p of products" style="border: 1px solid #ccc; padding: 10px">
+    <div *ngIf="editingProduct?.id !== p.id">
+      <img [src]="p.image_url" alt="{{ p.name }}" style="width: 100%; height: auto" />
+      <h3>{{ p.name }}</h3>
+      <p>${{ p.price }}</p>
+      <p>{{ p.description }}</p>
+      <div class="mt-2">
+        <button (click)="startEditing(p)">Edit</button>
+        <button (click)="deleteProduct(p.id!)">Delete</button>
+      </div> -->
+
+<!-- Edit Mode -->
+<!-- <div *ngIf="editingProduct?.id === p.id">
+        <input type="text" [(ngModel)]="editingProduct.name" placeholder="Name" />
+        <input type="number" [(ngModel)]="editingProduct.price" placeholder="Price" />
+        <input type="text" [(ngModel)]="editingProduct.description" placeholder="Description" />
+        <input type="text" [(ngModel)]="editingProduct.image_url" placeholder="Image URL" />
+        <img
+          *ngIf="editingProduct.image_url"
+          [src]="editingProduct.image_url"
+          alt="Preview"
+          style="
+            width: 100%;
+            max-height: 150px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-top: 8px;
+          "
+        /> -->
